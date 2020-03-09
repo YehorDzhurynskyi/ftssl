@@ -84,19 +84,19 @@ t_byte			*buffer_data(const struct s_buffer *buff)
 	return buff->size > SBO_SIZE ? buff->data.dynamic : (t_byte*)buff->data.sbo;
 }
 
-ssize_t			buffer_read_fd(struct s_buffer *buff, const int fd)
+t_bool			buffer_read_fd(struct s_buffer *buff, const int fd)
 {
-	ssize_t	len;
-	t_byte	temp[1024];
+	t_byte	temp[4096];
+	ssize_t	ret;
 
 	assert(fd >= 0);
-	while ((len = read(fd, temp, sizeof(temp))) > 0)
+	while ((ret = read(fd, temp, sizeof(temp))) > 0)
 	{
-		buffer_append(buff, temp, len);
+		buffer_append(buff, temp, ret);
 	}
-	if (len < 0)
+	if (ret < 0)
 	{
 		perror(NULL);
 	}
-	return (len);
+	return (ret >= 0);
 }

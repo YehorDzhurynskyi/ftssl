@@ -35,6 +35,6 @@ void			buffer_free(struct s_buffer* buff);
 void			buffer_append(struct s_buffer *buff,
 const t_byte *src, const size_t len);
 t_byte			*buffer_data(const struct s_buffer *buff);
-ssize_t			buffer_read_fd(struct s_buffer *buff, const int fd);
+t_bool			buffer_read_fd(struct s_buffer *buff, const int fd);
 
 #endif

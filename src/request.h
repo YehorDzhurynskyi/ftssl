@@ -14,6 +14,7 @@
 # define REQUEST_H
 
 # include "ft.h"
+# include "buffer.h"
 
 enum	e_cmd_name
 {
@@ -31,7 +32,7 @@ typedef struct
 	int			nfiles;
 }	t_request;
 
-typedef void (*t_cmd_process_func)(const t_byte *buffer, const size_t size);
+typedef void (*t_cmd_process_func)(struct s_buffer *buffer);
 
 t_request	request_parse(const int argc, const char **argv);
 

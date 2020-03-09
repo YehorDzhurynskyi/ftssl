@@ -26,7 +26,6 @@
 # define MD5_BLOCK_SIZE (MD5_BLOCK_BIT_SIZE / CHAR_BIT)
 # define MD5_OUTPUT_SIZE 32
 
-void	md5_process(const t_byte *buffer, const size_t size);
-void	md5_digest(struct s_buffer *buff, char *out);
+void	md5_process(struct s_buffer *buffer);
 
 #endif

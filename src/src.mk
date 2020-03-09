@@ -3,7 +3,7 @@ SRC_SRC		:=	main.c\
 				error.c\
 				request.c\
 				provider.c\
-				#buffer.c\
+				buffer.c\
 
 SRC_OBJ		=	$(addprefix $(FT_SSL_OBJ_DIR), $(SRC_SRC:.c=.o))
 FT_SSL_SRC	+=	$(addprefix $(SRC_DIR), $(SRC_SRC:.c=.o))
