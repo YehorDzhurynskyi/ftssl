@@ -17,8 +17,8 @@
 void	atexit_callback()
 {
 	// TODO: remove on release
-	ft_printf("$\n\n\n\n\n");
-	system("leaks ft_ssl");
+	// ft_printf("$\n\n\n\n\n");
+	// system("leaks ft_ssl");
 }
 
 static enum e_cmd_name	cmd_name_of(const char *str)

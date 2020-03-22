@@ -28,7 +28,10 @@ static const char g_standard_cmds_msg[] =
 static const char g_digest_cmds_msg[] =
 "Message Digest commands:\n"
 "md5\n"
+"sha224\n"
 "sha256\n"
+"sha384\n"
+"sha512\n"
 "\n";
 static const char g_cipher_cmds_msg[] =
 "Cipher commands:\n";
