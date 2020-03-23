@@ -15,6 +15,7 @@
 #include "command.h"
 #include "error.h"
 #include "md5/md5.h"
+#include "sha256/sha256.h"
 
 void	atexit_callback()
 {
@@ -31,13 +32,23 @@ static t_command	*cmd_of(const char *str)
             .uname = "MD5",
             .process_func = md5_process,
             .multiplier = MD5_BLOCK_SIZE
-        }
+        },
+        {
+            .lname = "sha256",
+            .uname = "SHA256",
+            .process_func = sha256_process,
+            .multiplier = SHA256_BLOCK_SIZE
+        },
     };
 
 	if (ft_strequ(str, "md5"))
 	{
 		return (&commands[0]);
 	}
+    else if (ft_strequ(str, "sha256"))
+    {
+        return (&commands[1]);
+    }
 	return (NULL);
 }
 

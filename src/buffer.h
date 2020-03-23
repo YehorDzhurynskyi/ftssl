@@ -13,8 +13,11 @@
 #ifndef BUFFER_H
 # define BUFFER_H
 
-#include "ft.h"
-#include <stdlib.h>
+# include "ft.h"
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <limits.h>
 
 # define SBO_SIZE (64)
 

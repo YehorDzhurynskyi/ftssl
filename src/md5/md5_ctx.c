@@ -86,8 +86,6 @@ t_md5_ctx   md5_ctx_init(struct s_buffer *buffer)
     ctx.buffer = buffer;
     olen = ctx.buffer->size * CHAR_BIT;
     len = olen + 1;
-    // TODO: figure out correctness of 'zeroes_count'
-    // zeroes_count = MD5_PAYLOAD_BIT_SIZE - len % MD5_PAYLOAD_BIT_SIZE;
     zeroes_count = FT_ALIGN_UP(len, MD5_BLOCK_BIT_SIZE) - len - MD5_LEN_BIT_SIZE;
     len = (len / MD5_BLOCK_BIT_SIZE) * MD5_BLOCK_BIT_SIZE + MD5_PAYLOAD_BIT_SIZE;
     buffer_append(ctx.buffer, (t_byte*)"\x80", 1);

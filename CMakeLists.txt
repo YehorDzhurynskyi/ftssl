@@ -23,7 +23,11 @@ add_executable(ft_ssl
     src/md5/md5_ctx.c
     src/md5/md5_internal.h
     src/md5/md5_funcs.c
-    src/md5/md5_rounds.c
+
+    src/sha256/sha256.h
+    src/sha256/sha256.c
+    src/sha256/sha256_ctx.c
+    src/sha256/sha256_internal.h
 )
 
 target_include_directories(ft_ssl

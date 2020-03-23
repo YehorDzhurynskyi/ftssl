@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5.h                                              :+:      :+:    :+:   */
+/*   sha256.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ydzhuryn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MD5_H
-# define MD5_H
+#include "sha256.h"
+#include "sha256_internal.h"
+#include <assert.h> // TODO: remove
 
-# include "buffer.h"
+void    sha256_process(struct s_buffer *buffer)
+{
+    t_sha256_ctx   ctx;
 
-# define MD5_PAYLOAD_BIT_SIZE (448)
-# define MD5_LEN_BIT_SIZE (64)
-# define MD5_BLOCK_BIT_SIZE (MD5_PAYLOAD_BIT_SIZE + MD5_LEN_BIT_SIZE)
-# define MD5_BLOCK_SIZE (MD5_BLOCK_BIT_SIZE / CHAR_BIT)
-
-void	md5_process(struct s_buffer *buffer);
-
-#endif
+    assert(buffer->capacity % SHA256_BLOCK_SIZE == 0);
+    ctx = sha256_ctx_init(buffer);
+    assert(buffer->size == buffer->capacity);
+    sha256_ctx_run(&ctx);
+    sha256_ctx_print(&ctx);
+}

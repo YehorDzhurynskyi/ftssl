@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   md5.h                                              :+:      :+:    :+:   */
+/*   sha256.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ydzhuryn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,16 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MD5_H
-# define MD5_H
+#ifndef SHA256_H
+#define SHA256_H
 
 # include "buffer.h"
 
-# define MD5_PAYLOAD_BIT_SIZE (448)
-# define MD5_LEN_BIT_SIZE (64)
-# define MD5_BLOCK_BIT_SIZE (MD5_PAYLOAD_BIT_SIZE + MD5_LEN_BIT_SIZE)
-# define MD5_BLOCK_SIZE (MD5_BLOCK_BIT_SIZE / CHAR_BIT)
+# define SHA256_PAYLOAD_BIT_SIZE (448)
+# define SHA256_LEN_BIT_SIZE (64)
+# define SHA256_BLOCK_BIT_SIZE (SHA256_PAYLOAD_BIT_SIZE + SHA256_LEN_BIT_SIZE)
+# define SHA256_BLOCK_SIZE (SHA256_BLOCK_BIT_SIZE / CHAR_BIT)
 
-void	md5_process(struct s_buffer *buffer);
+void    sha256_process(struct s_buffer *buffer);
 
 #endif
