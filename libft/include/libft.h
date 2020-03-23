@@ -27,6 +27,7 @@ typedef int				t_bool;
 # define FT_MAX(x, y) (x) > (y) ? (x) : (y)
 # define FT_CLAMP(v, min, max) FT_MIN(max, FT_MAX(min, v))
 # define FT_ARRLEN(x) (sizeof((x)) / sizeof((x)[0]))
+# define FT_ALIGN_UP(x, a) ((((size_t)(x)) + ((a) - 1)) & ~((a) - 1))
 
 typedef struct		s_list
 {
