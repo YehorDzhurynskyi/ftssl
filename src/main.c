@@ -12,7 +12,9 @@
 
 #include "ft.h"
 #include "request.h"
+#include "command.h"
 #include "error.h"
+#include "md5/md5.h"
 
 void	atexit_callback()
 {
@@ -21,28 +23,37 @@ void	atexit_callback()
 	// system("leaks ft_ssl");
 }
 
-static enum e_cmd_name	cmd_name_of(const char *str)
+static t_command	*cmd_of(const char *str)
 {
+    static t_command commands[] = {
+        {
+            .lname = "md5",
+            .uname = "MD5",
+            .process_func = md5_process,
+            .multiplier = MD5_BLOCK_SIZE
+        }
+    };
+
 	if (ft_strequ(str, "md5"))
 	{
-		return (cmd_name_md5);
+		return (&commands[0]);
 	}
-	return (cmd_name_unknown);
+	return (NULL);
 }
 
 // TODO: remove
-void	provide(const t_request *request, enum e_cmd_name cmd);
+void	provide(const t_command *cmd, const t_request *request);
 
 // TODO: -p turns on reading from stdin
 // TODO: *stdin of -r (openssl md5 -r)
 // TODO: parse commands from STDIN
 int						main(const int argc, const char **argv)
 {
-	enum e_cmd_name	cmd_name;
-	t_request		request;
+    t_command   *cmd;
+	t_request	request;
 
 	atexit(atexit_callback);
-	if (argc < 2 || ((cmd_name = cmd_name_of(argv[1])) == cmd_name_unknown))
+	if (argc < 2 || ((cmd = cmd_of(argv[1])) == NULL))
 	{
 		if (argc >= 2) // TODO: process stdin instead
 		{
@@ -51,6 +62,6 @@ int						main(const int argc, const char **argv)
 		exit(EXIT_FAILURE);
 	}
 	request = request_parse(argc - 2, argv + 2);
-	provide(&request, cmd_name);
+	provide(cmd, &request);
 	return (EXIT_SUCCESS);
 }

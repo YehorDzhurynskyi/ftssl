@@ -14,15 +14,27 @@
 # define MD5_INTERNAL_H
 
 # include "ft.h"
+# include "md5.h"
 
-void	md5_round1(const unsigned int *x, unsigned int v[4]);
-void	md5_round2(const unsigned int *x, unsigned int v[4]);
-void	md5_round3(const unsigned int *x, unsigned int v[4]);
-void	md5_round4(const unsigned int *x, unsigned int v[4]);
+typedef struct s_md5_ctx    t_md5_ctx;
+struct  s_md5_ctx
+{
+    struct s_buffer *buffer;
+    uint32_t        v[4];
+};
 
-t_byte	md5_f(const t_byte a, const t_byte b, const t_byte c);
-t_byte	md5_g(const t_byte a, const t_byte b, const t_byte c);
-t_byte	md5_h(const t_byte a, const t_byte b, const t_byte c);
-t_byte	md5_i(const t_byte a, const t_byte b, const t_byte c);
+t_md5_ctx   md5_ctx_init(struct s_buffer *buffer);
+void        md5_ctx_run(t_md5_ctx *ctx);
+void        md5_ctx_print(const t_md5_ctx *ctx);
+
+void	    md5_round1(const uint32_t *x, uint32_t v[4]);
+void	    md5_round2(const uint32_t *x, uint32_t v[4]);
+void	    md5_round3(const uint32_t *x, uint32_t v[4]);
+void	    md5_round4(const uint32_t *x, uint32_t v[4]);
+
+uint32_t	md5_f(const uint32_t b, const uint32_t c, const uint32_t d);
+uint32_t	md5_g(const uint32_t b, const uint32_t c, const uint32_t d);
+uint32_t	md5_h(const uint32_t b, const uint32_t c, const uint32_t d);
+uint32_t	md5_i(const uint32_t b, const uint32_t c, const uint32_t d);
 
 #endif

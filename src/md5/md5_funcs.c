@@ -12,22 +12,22 @@
 
 #include "ft.h"
 
-t_byte	md5_f(const t_byte a, const t_byte b, const t_byte c)
+uint32_t	md5_f(const uint32_t b, const uint32_t c, const uint32_t d)
 {
-	return (a & b) | (~a & c);
+	return ((b & c) | (~b & d));
 }
 
-t_byte	md5_g(const t_byte a, const t_byte b, const t_byte c)
+uint32_t	md5_g(const uint32_t b, const uint32_t c, const uint32_t d)
 {
-	return (a & c) | (~c & b);
+	return ((d & b) | (~d & c));
 }
 
-t_byte	md5_h(const t_byte a, const t_byte b, const t_byte c)
+uint32_t	md5_h(const uint32_t b, const uint32_t c, const uint32_t d)
 {
-	return a ^ b ^ c;
+	return (b ^ c ^ d);
 }
 
-t_byte	md5_i(const t_byte a, const t_byte b, const t_byte c)
+uint32_t	md5_i(const uint32_t b, const uint32_t c, const uint32_t d)
 {
-	return b ^ (~c | a);
+	return (c ^ (b | ~d));
 }

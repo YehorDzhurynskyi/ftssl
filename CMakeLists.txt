@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.1)
 
 project(ft_ssl)
 
+add_executable(ft_ssl_test
+    src/test.c
+)
+
 add_executable(ft_ssl
     src/main.c
     src/buffer.h
@@ -10,10 +14,13 @@ add_executable(ft_ssl
     src/error.c
     src/request.h
     src/request.c
+    src/command.h
+    src/command.c
     src/provider.c
 
     src/md5/md5.h
     src/md5/md5.c
+    src/md5/md5_ctx.c
     src/md5/md5_internal.h
     src/md5/md5_funcs.c
     src/md5/md5_rounds.c

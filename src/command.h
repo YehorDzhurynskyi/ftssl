@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   request.h                                          :+:      :+:    :+:   */
+/*   command.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ydzhuryn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,22 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REQUEST_H
-# define REQUEST_H
+#ifndef COMMAND_H
+# define COMMAND_H
 
-# include "ft.h"
 # include "buffer.h"
 
-typedef struct
-{
-	t_bool		print_stdin;
-	t_bool		quiet_mode;
-	t_bool		reverse_format;
-	t_byte		*input_string;
-	const char	**files;
-	int			nfiles;
-}	t_request;
+typedef void (*t_process_func)(struct s_buffer *buffer);
 
-t_request	request_parse(const int argc, const char **argv);
+typedef struct s_command    t_command;
+struct  s_command
+{
+    const char      *lname;
+    const char      *uname;
+    t_process_func  process_func;
+    int             multiplier;
+};
 
 #endif

@@ -11,45 +11,16 @@
 /* ************************************************************************** */
 
 #include "md5.h"
-#include "assert.h"
-
-static void	append32(struct s_buffer *buff, const unsigned int bits)
-{
-	int		i;
-	t_byte	byte;
-
-	i = 32 / CHAR_BIT - 1;
-	while (i >= 0)
-	{
-		byte = (bits >> i-- * CHAR_BIT) & 0xff;
-		buffer_append(buff, &byte, 1);
-	}
-}
+#include "md5_internal.h"
+#include "assert.h" // TODO: remove
 
 void		md5_process(struct s_buffer *buffer)
 {
-	unsigned long long	len;
-	int					zeroes_count;
-	int					i;
-	unsigned int		iv[4];
+	t_md5_ctx   ctx;
 
-	assert(buffer->capacity % MD5_BLOCK_SIZE == 0);
-	len = buffer->size * CHAR_BIT + 1;
-	zeroes_count = MD5_PAYLOAD_BIT_SIZE - len % MD5_PAYLOAD_BIT_SIZE;
-	len = (len / MD5_BLOCK_BIT_SIZE) *
-	MD5_BLOCK_BIT_SIZE + MD5_PAYLOAD_BIT_SIZE;
-	buffer_append(buffer, (t_byte*)"\x80", 1);
-	i = 0;
-	while (i++ < zeroes_count / CHAR_BIT)
-	{
-		buffer_append(buffer, (t_byte*)"\x0", 1);
-	}
-	append32(buffer, len & UINT_MAX);
-	append32(buffer, (len >> 32) & UINT_MAX);
+    assert(buffer->capacity % MD5_BLOCK_SIZE == 0);
+    ctx = md5_ctx_init(buffer);
 	assert(buffer->size == buffer->capacity);
-	assert(buffer->size % MD5_BLOCK_SIZE == 0);
-	iv[0] = 0x67 << 24 | 0x45 << 16 | 0x23 << 8 | 0x01 << 0;
-	iv[1] = 0xEF << 24 | 0xCD << 16 | 0xAB << 8 | 0x89 << 0;
-	iv[2] = 0x98 << 24 | 0xBA << 16 | 0xDC << 8 | 0xFE << 0;
-	iv[3] = 0x10 << 24 | 0x32 << 16 | 0x54 << 8 | 0x76 << 0;
+    md5_ctx_run(&ctx);
+    md5_ctx_print(&ctx);
 }

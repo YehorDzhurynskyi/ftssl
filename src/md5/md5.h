@@ -24,7 +24,6 @@
 # define MD5_LEN_BIT_SIZE (64)
 # define MD5_BLOCK_BIT_SIZE (MD5_PAYLOAD_BIT_SIZE + MD5_LEN_BIT_SIZE)
 # define MD5_BLOCK_SIZE (MD5_BLOCK_BIT_SIZE / CHAR_BIT)
-# define MD5_OUTPUT_SIZE 32
 
 void	md5_process(struct s_buffer *buffer);
 

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <assert.h>
+#include <assert.h> // TODO: remove
 #include "md5/md5_internal.h"
 
-static unsigned int g_T[64] =
+static uint32_t g_T[64] =
 {
 	0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
 	0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -36,13 +36,13 @@ static unsigned int g_T[64] =
 	0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 };
 
-static unsigned int	rotl(const unsigned int v, unsigned int r)
+static uint32_t	rotl(const uint32_t v, uint32_t r)
 {
 	assert(r < 32);
-	return v << r | v >> (32 - r);
+	return ((v << r) | (v >> (32 - r)));
 }
 
-void				md5_round1(const unsigned int *x, unsigned int v[4])
+void				md5_round1(const uint32_t *x, uint32_t v[4])
 {
 	v[0] = v[1] + rotl(v[0] + md5_f(v[1], v[2], v[3]) + x[0] + g_T[0], 7);
 	v[3] = v[0] + rotl(v[3] + md5_f(v[0], v[1], v[2]) + x[1] + g_T[1], 12);
@@ -65,7 +65,7 @@ void				md5_round1(const unsigned int *x, unsigned int v[4])
 	v[1] = v[2] + rotl(v[1] + md5_f(v[2], v[3], v[0]) + x[15] + g_T[15], 22);
 }
 
-void				md5_round2(const unsigned int *x, unsigned int v[4])
+void				md5_round2(const uint32_t *x, uint32_t v[4])
 {
 	v[0] = v[1] + rotl(v[0] + md5_g(v[1], v[2], v[3]) + x[1] + g_T[16], 5);
 	v[3] = v[0] + rotl(v[3] + md5_g(v[0], v[1], v[2]) + x[6] + g_T[17], 9);
@@ -88,7 +88,7 @@ void				md5_round2(const unsigned int *x, unsigned int v[4])
 	v[1] = v[2] + rotl(v[1] + md5_g(v[2], v[3], v[0]) + x[12] + g_T[31], 20);
 }
 
-void				md5_round3(const unsigned int *x, unsigned int v[4])
+void				md5_round3(const uint32_t *x, uint32_t v[4])
 {
 	v[0] = v[1] + rotl(v[0] + md5_h(v[1], v[2], v[3]) + x[5] + g_T[32], 4);
 	v[3] = v[0] + rotl(v[3] + md5_h(v[0], v[1], v[2]) + x[8] + g_T[33], 11);
@@ -111,7 +111,7 @@ void				md5_round3(const unsigned int *x, unsigned int v[4])
 	v[1] = v[2] + rotl(v[1] + md5_h(v[2], v[3], v[0]) + x[2] + g_T[47], 23);
 }
 
-void				md5_round4(const unsigned int *x, unsigned int v[4])
+void				md5_round4(const uint32_t *x, uint32_t v[4])
 {
 	v[0] = v[1] + rotl(v[0] + md5_i(v[1], v[2], v[3]) + x[0] + g_T[48], 6);
 	v[3] = v[0] + rotl(v[3] + md5_i(v[0], v[1], v[2]) + x[7] + g_T[49], 10);

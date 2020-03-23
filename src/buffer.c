@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "buffer.h"
-#include "assert.h"
+#include "assert.h" // TODO: remove
 #include <unistd.h>
 #include <stdio.h>
 
@@ -62,9 +62,7 @@ const t_byte *src, const size_t len)
 	}
 	else
 	{
-		required_capacity = sizeof(t_byte) *
-		ft_ceil((buff->size + len) / (float)buff->multiplier) *
-		buff->multiplier;
+		required_capacity = ft_ceil((buff->size + len) / (float)buff->multiplier) * buff->multiplier;
 		if (buff->size <= SBO_SIZE)
 		{
 			buffer_realloc(buff, buff->data.sbo, required_capacity);
