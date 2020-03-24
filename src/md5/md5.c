@@ -20,6 +20,10 @@ void		md5_process(struct s_buffer *buffer)
 
     assert(buffer->capacity % MD5_BLOCK_SIZE == 0);
     ctx = md5_ctx_init(buffer);
+    ctx.v[0] = 0x67452301;
+    ctx.v[1] = 0xefcdab89;
+    ctx.v[2] = 0x98badcfe;
+    ctx.v[3] = 0x10325476;
 	assert(buffer->size == buffer->capacity);
     md5_ctx_run(&ctx);
     md5_ctx_print(&ctx);

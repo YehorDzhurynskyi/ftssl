@@ -93,10 +93,6 @@ t_md5_ctx   md5_ctx_init(struct s_buffer *buffer)
     while (i++ < zeroes_count / CHAR_BIT)
         buffer_append(ctx.buffer, (t_byte*)"\x0", 1);
     buffer_append(ctx.buffer, (t_byte*)&olen, sizeof(uint64_t));
-    ctx.v[0] = 0x67452301;
-    ctx.v[1] = 0xefcdab89;
-    ctx.v[2] = 0x98badcfe;
-    ctx.v[3] = 0x10325476;
     return (ctx);
 }
 
