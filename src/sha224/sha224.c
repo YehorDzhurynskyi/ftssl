@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   sha224.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ydzhuryn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,25 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sha256.h"
-#include "sha256_internal.h"
+#include "sha224.h"
+#include "sha256/sha256_internal.h"
 #include <assert.h> // TODO: remove
 
-void    sha256_process(struct s_buffer *buffer)
+static void sha224_ctx_print(const t_sha256_ctx *ctx)
+{
+    int i;
+
+    i = -1;
+    while (++i < 7)
+        ft_printf("%08x", ctx->v[i]);
+}
+
+void        sha224_process(struct s_buffer *buffer)
 {
     t_sha256_ctx   ctx;
 
-    assert(buffer->capacity % SHA256_BLOCK_SIZE == 0);
+    assert(buffer->capacity % SHA224_BLOCK_SIZE == 0);
     ctx = sha256_ctx_init(buffer);
-    ctx.v[0] = 0x6a09e667;
-    ctx.v[1] = 0xbb67ae85;
-    ctx.v[2] = 0x3c6ef372;
-    ctx.v[3] = 0xa54ff53a;
-    ctx.v[4] = 0x510e527f;
-    ctx.v[5] = 0x9b05688c;
-    ctx.v[6] = 0x1f83d9ab;
-    ctx.v[7] = 0x5be0cd19;
+    ctx.v[0] = 0xc1059ed8;
+    ctx.v[1] = 0x367cd507;
+    ctx.v[2] = 0x3070dd17;
+    ctx.v[3] = 0xf70e5939;
+    ctx.v[4] = 0xffc00b31;
+    ctx.v[5] = 0x68581511;
+    ctx.v[6] = 0x64f98fa7;
+    ctx.v[7] = 0xbefa4fa4;
     assert(buffer->size == buffer->capacity);
     sha256_ctx_run(&ctx);
-    sha256_ctx_print(&ctx);
+    sha224_ctx_print(&ctx);
 }

@@ -75,14 +75,6 @@ t_sha256_ctx    sha256_ctx_init(struct s_buffer *buffer)
         const t_byte b = (olen >> (64 - i * 8)) & 0xff;
         buffer_append(ctx.buffer, &b, 1);
     }
-    ctx.v[0] = 0x6a09e667;
-    ctx.v[1] = 0xbb67ae85;
-    ctx.v[2] = 0x3c6ef372;
-    ctx.v[3] = 0xa54ff53a;
-    ctx.v[4] = 0x510e527f;
-    ctx.v[5] = 0x9b05688c;
-    ctx.v[6] = 0x1f83d9ab;
-    ctx.v[7] = 0x5be0cd19;
     return (ctx);
 }
 

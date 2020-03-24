@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sha256.c                                           :+:      :+:    :+:   */
+/*   sha224.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ydzhuryn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,25 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sha256.h"
-#include "sha256_internal.h"
-#include <assert.h> // TODO: remove
+#ifndef SHA224_H
+#define SHA224_H
 
-void    sha256_process(struct s_buffer *buffer)
-{
-    t_sha256_ctx   ctx;
+# include "buffer.h"
 
-    assert(buffer->capacity % SHA256_BLOCK_SIZE == 0);
-    ctx = sha256_ctx_init(buffer);
-    ctx.v[0] = 0x6a09e667;
-    ctx.v[1] = 0xbb67ae85;
-    ctx.v[2] = 0x3c6ef372;
-    ctx.v[3] = 0xa54ff53a;
-    ctx.v[4] = 0x510e527f;
-    ctx.v[5] = 0x9b05688c;
-    ctx.v[6] = 0x1f83d9ab;
-    ctx.v[7] = 0x5be0cd19;
-    assert(buffer->size == buffer->capacity);
-    sha256_ctx_run(&ctx);
-    sha256_ctx_print(&ctx);
-}
+# define SHA224_PAYLOAD_BIT_SIZE (448)
+# define SHA224_LEN_BIT_SIZE (64)
+# define SHA224_BLOCK_BIT_SIZE (SHA224_PAYLOAD_BIT_SIZE + SHA224_LEN_BIT_SIZE)
+# define SHA224_BLOCK_SIZE (SHA224_BLOCK_BIT_SIZE / CHAR_BIT)
+
+void    sha224_process(struct s_buffer *buffer);
+
+#endif
