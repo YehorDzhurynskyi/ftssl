@@ -2,8 +2,18 @@ cmake_minimum_required(VERSION 3.1)
 
 project(ft_ssl)
 
-add_executable(ft_ssl_test
-    src/test.c
+add_executable(ref_md5
+    src/ref_md5.c
+)
+
+add_executable(ref_sha256
+        src/ref_sha256.cpp
+)
+
+set_target_properties(ref_sha256
+    PROPERTIES
+        LINKER_LANGUAGE "CXX"
+        CXX_STANDARD    17
 )
 
 add_executable(ft_ssl

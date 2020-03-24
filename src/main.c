@@ -52,6 +52,8 @@ static t_command	*cmd_of(const char *str)
 	return (NULL);
 }
 
+const char text[] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis nisi augue, at mollis arcu eleifend sit amet. Phasellus ultrices lobortis orci, ut ullamcorper justo blandit condimentum. In semper ante ut turpis varius hendrerit. Mauris dui nisi, rutrum a leo eget, vehicula fringilla urna. Phasellus sed augue porttitor, laoreet sapien et, ullamcorper mi. Cras a mauris nibh. Proin in ligula quam. Praesent ut tincidunt dui. Fusce nec condimentum arcu. Sed lobortis semper eros, eget ullamcorper sapien venenatis ac. Nam sollicitudin urna et dolor volutpat commodo. Donec imperdiet purus id velit sagittis ullamcorper. Mauris vitae dolor maximus, sollicitudin mauris vitae, porta nunc. Aliquam erat volutpat. Ut vel vulputate magna, id consequat lorem. Duis malesuada, eros ac elementum semper, magna dui tempus ante, euismod vulputate metus eros et nisi. Nullam posuere vehicula finibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus congue ut turpis vitae rhoncus.";
+
 // TODO: remove
 void	provide(const t_command *cmd, const t_request *request);
 
@@ -73,6 +75,7 @@ int						main(const int argc, const char **argv)
 		exit(EXIT_FAILURE);
 	}
 	request = request_parse(argc - 2, argv + 2);
+	//request.input_string = (t_byte*)text;
 	provide(cmd, &request);
 	return (EXIT_SUCCESS);
 }

@@ -44,16 +44,11 @@ static const uint32_t g_K[64] =
 
 void        sha256_ctx_print(const t_sha256_ctx *ctx)
 {
-    int     i;
-    t_byte  b;
+    int i;
 
     i = -1;
-    while (++i < 32)
-    {
-        b = *((t_byte*)ctx->v + i);
-        ft_putchar(HEX[b / 16]);
-        ft_putchar(HEX[b % 16]);
-    }
+    while (++i < 8)
+        ft_printf("%08x", ctx->v[i]);
 }
 
 t_sha256_ctx    sha256_ctx_init(struct s_buffer *buffer)
@@ -71,10 +66,15 @@ t_sha256_ctx    sha256_ctx_init(struct s_buffer *buffer)
     assert((olen + 1 + zeroes_count + 64) % 512 == 0);
     len = (len / SHA256_BLOCK_BIT_SIZE) * SHA256_BLOCK_BIT_SIZE + SHA256_PAYLOAD_BIT_SIZE;
     buffer_append(ctx.buffer, (t_byte*)"\x80", 1);
-    i = 0;
-    while (i++ < zeroes_count / CHAR_BIT)
+    i = -1;
+    while (++i < zeroes_count / CHAR_BIT)
         buffer_append(ctx.buffer, (t_byte*)"\x0", 1);
-    buffer_append(ctx.buffer, (t_byte*)&olen, sizeof(uint64_t));
+    i = 0;
+    while (++i < 9)
+    {
+        const t_byte b = (olen >> (64 - i * 8)) & 0xff;
+        buffer_append(ctx.buffer, &b, 1);
+    }
     ctx.v[0] = 0x6a09e667;
     ctx.v[1] = 0xbb67ae85;
     ctx.v[2] = 0x3c6ef372;
@@ -104,12 +104,21 @@ void        sha256_ctx_run(t_sha256_ctx *ctx)
         uint32_t w[64];
 
         uint32_t *m = (uint32_t*)(buffer_data(ctx->buffer) + i * SHA256_BLOCK_SIZE);
-        ft_memcpy(&w, m, sizeof(uint32_t) * 16);
+        j = -1;
+        while (++j < 16)
+        {
+            const uint32_t b0 = (m[j] & 0x000000ff) << 24u;
+            const uint32_t b1 = (m[j] & 0x0000ff00) << 8u;
+            const uint32_t b2 = (m[j] & 0x00ff0000) >> 8u;
+            const uint32_t b3 = (m[j] & 0xff000000) >> 24u;
+
+            w[j] = b0 | b1 | b2 | b3;
+        }
         j = 15;
         while (++j < 64)
         {
-            const uint32_t s0 = rotr(w[j - 15], 7) ^ rotr(w[j - 15], 18) ^ rotr(w[j - 15], 3);
-            const uint32_t s1 = rotr(w[j - 2], 17) ^ rotr(w[j - 2], 19) ^ rotr(w[j - 2], 10);
+            const uint32_t s0 = rotr(w[j - 15], 7) ^ rotr(w[j - 15], 18) ^ (w[j - 15] >> 3);
+            const uint32_t s1 = rotr(w[j - 2], 17) ^ rotr(w[j - 2], 19) ^ (w[j - 2] >> 10);
             w[j] = w[j - 16] + s0 + w[j - 7] + s1;
         }
 
