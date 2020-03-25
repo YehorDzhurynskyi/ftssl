@@ -54,16 +54,16 @@ void        sha256_ctx_print(const t_sha256_ctx *ctx)
 t_sha256_ctx    sha256_ctx_init(struct s_buffer *buffer)
 {
     t_sha256_ctx    ctx;
-    uint64_t	olen;
-    uint64_t	len;
-    int			zeroes_count;
-    int			i;
+    uint64_t	    olen;
+    uint64_t	    len;
+    int			    zeroes_count;
+    int			    i;
 
     ctx.buffer = buffer;
     olen = ctx.buffer->size * CHAR_BIT;
     len = olen + 1;
     zeroes_count = FT_ALIGN_UP(len, SHA256_BLOCK_BIT_SIZE) - len - SHA256_LEN_BIT_SIZE;
-    assert((olen + 1 + zeroes_count + 64) % 512 == 0);
+    assert((olen + 1 + zeroes_count + SHA256_LEN_BIT_SIZE) % SHA256_BLOCK_BIT_SIZE == 0);
     len = (len / SHA256_BLOCK_BIT_SIZE) * SHA256_BLOCK_BIT_SIZE + SHA256_PAYLOAD_BIT_SIZE;
     buffer_append(ctx.buffer, (t_byte*)"\x80", 1);
     i = -1;
@@ -72,7 +72,7 @@ t_sha256_ctx    sha256_ctx_init(struct s_buffer *buffer)
     i = 0;
     while (++i < 9)
     {
-        const t_byte b = (olen >> (64 - i * 8)) & 0xff;
+        const t_byte b = (olen >> (SHA256_LEN_BIT_SIZE - i * 8)) & 0xff;
         buffer_append(ctx.buffer, &b, 1);
     }
     return (ctx);

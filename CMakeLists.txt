@@ -41,6 +41,11 @@ add_executable(ft_ssl
 
     src/sha224/sha224.h
     src/sha224/sha224.c
+
+    src/sha512/sha512.h
+    src/sha512/sha512.c
+    src/sha512/sha512_ctx.c
+    src/sha512/sha512_internal.h
 )
 
 target_include_directories(ft_ssl

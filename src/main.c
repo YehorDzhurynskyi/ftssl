@@ -17,6 +17,7 @@
 #include "md5/md5.h"
 #include "sha256/sha256.h"
 #include "sha224/sha224.h"
+#include "sha512/sha512.h"
 
 void	atexit_callback()
 {
@@ -46,6 +47,12 @@ static t_command	*cmd_of(const char *str)
             .process_func = sha224_process,
             .multiplier = SHA224_BLOCK_SIZE
         },
+        {
+            .lname = "sha512",
+            .uname = "SHA512",
+            .process_func = sha512_process,
+            .multiplier = SHA512_BLOCK_SIZE
+        },
     };
 
 	if (ft_strequ(str, "md5"))
@@ -59,6 +66,10 @@ static t_command	*cmd_of(const char *str)
     else if (ft_strequ(str, "sha224"))
     {
         return (&commands[2]);
+    }
+    else if (ft_strequ(str, "sha512"))
+    {
+        return (&commands[3]);
     }
 	return (NULL);
 }
