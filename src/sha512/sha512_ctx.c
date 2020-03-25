@@ -71,8 +71,8 @@ void        sha512_ctx_print(const t_sha512_ctx *ctx)
 t_sha512_ctx    sha512_ctx_init(struct s_buffer *buffer)
 {
     t_sha512_ctx    ctx;
-    uint64_t	    olen;
-    uint64_t	    len;
+    __uint128_t	    olen;
+    __uint128_t	    len;
     int			    zeroes_count;
     int			    i;
 
@@ -89,7 +89,7 @@ t_sha512_ctx    sha512_ctx_init(struct s_buffer *buffer)
     i = 0;
     while (++i < 17)
     {
-        const t_byte b = (olen >> (SHA512_LEN_BIT_SIZE - i * 16)) & 0xff;
+        const t_byte b = (olen >> (SHA512_LEN_BIT_SIZE - i * 8)) & 0xff;
         buffer_append(ctx.buffer, &b, 1);
     }
     return (ctx);
